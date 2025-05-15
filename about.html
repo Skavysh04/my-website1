@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<meta charset="utf-8">
+<title>О нас</title>
+<link rel="shortcut icon" href="img/zer.png"  type="image/x-icon">
+<link rel="stylesheet" href="style.css">
+<script src="glaw.js" defer></script>
+    </head>
+    <body>
+        <div id="mmm">
+        <div id="header">
+<div id="menu">
+    <a href="vxod.html" target="blank" class="buton1">Войти</a>
+    <div id="logo">
+        <a href="glaw.html"> <img src="img\logo.png" alt="Картинка" height="130" width=""></a>
+    </div>
+    <div id="slogan">
+      Гостиная <br>
+      вашей мечты
+    </div>
+    <div class="search-container">
+      <form onsubmit="return false;">
+        <input type="text" id="searchInput" placeholder="Кто ищет — тот найдет">
+      </form>
+      <ul id="suggestions" class="suggestions"></ul>
+    </div>
+    <ul id="navbar">
+        <b><li><a href="glaw.html" class="active">Главная</a></li></b>
+        <b><li><a href="catalog.html" class="active">Каталог</a></li></b>
+        <b><li><a href="about.html" class="active">О нас</a></li></b>
+        <b><li><a href="basket.html" class="active">Корзина </a></li></b>
+      </ul>
+</div>
+<div id="centerrr">
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // 🔹 Массив товаров — обрабатывается на всех страницах
+    const products = [
+    { title: "Диван Pero 2-х местный FIRST", url: "#" },
+    { title: "Комод Soho белая", url: "#" },
+    { title: "Шкаф угловой Soho беж", url: "#" },
+    { title: "Кресло Villaggio с подлокотниками", url: "#" },
+    { title: "Стол журнальный Sheffilton CT38", url: "#" },
+    { title: "Стол журнальный Бруклин", url: "#" },
+    { title: "Диван Brownie Memori Basic", url: "#" },
+    { title: "Комод Montreal серый", url: "#" },
+    { title: "Шкаф угловой Montreal серый", url: "#" },
+    { title: "Кресло Brioche FIRST", url: "#" },
+    { title: "Кресло Brioche Premier", url: "#" },
+    { title: "Стол журнальный Эйден", url: "#" },
+    { title: "Диван Monaco FIRST левый", url: "#" },
+    { title: "Тумба под телевизор Montreal", url: "#" },
+    { title: "Шкаф четырехстворчатый Soho", url: "#" },
+    { title: "Шкаф трехстворчатый Montreal", url: "#" },
+    { title: "Кресло качалка Souffle Preston 960", url: "#" },
+    { title: "Журнальные столы Стелла", url: "#" },
+    { title: "Диван Brioche Memori FIRST", url: "#" },
+    { title: "Комод Altea", url: "#" },
+    { title: "Стол журнальный Кассо", url: "#" },
+    { title: "Шкаф угловой Rimini с зеркалом", url: "#" },
+    { title: "Кресло Brownie Memori FIRST", url: "#" },
+    { title: "Комод Chelsea серая со столом", url: "#" },
+    { title: "Диван Pero угловой Basic", url: "#" },
+    { title: "Шкаф угловой Soho серый", url: "#" },
+    { title: "Кресло Pero FIRST", url: "#" },
+    { title: "Комод Soho графит", url: "#" },
+    { title: "Диван Brownie Memori Premier", url: "#" },
+    { title: "Журнальный стол Джуан", url: "#" },
+  ];
+    const searchInput = document.getElementById("searchInput");
+    const suggestions = document.getElementById("suggestions");
+    // Проверка на наличие элементов (чтобы не было ошибок на других страницах)
+    if (!searchInput || !suggestions) return;
+    function updateSuggestions() {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        suggestions.style.display = "none";
+        suggestions.innerHTML = "";
+        return;
+      }
+      // Разбиваем запрос на слова
+      const queryWords = query.split(" ").filter(word => word !== "");
+      // Фильтруем товары, проверяя что все слова присутствуют в названии товара
+      const matches = products.filter(product => {
+        const title = product.title.toLowerCase();
+        return queryWords.every(word => title.includes(word));
+      });
+      if (matches.length === 0) {
+        suggestions.innerHTML = "<li style='padding: 5px 10px;'>Ничего не найдено</li>";
+        suggestions.style.display = "block";
+        return;
+      }
+      suggestions.innerHTML = matches.map(product => `
+        <li style="padding: 5px 10px; border-bottom: 1px solid #eee;">
+          <a href="${product.url}" style="text-decoration: none; color: inherit;">${product.title}</a>
+        </li>
+      `).join("");
+      suggestions.style.display = "block";
+    }
+    searchInput.addEventListener("input", updateSuggestions);
+    document.addEventListener("click", (e) => {
+      if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+        suggestions.style.display = "none";
+      }
+    });
+  });
+    </script>
+     <div id="well">
+      <h1>“</h1>
+      Наша цель — способствовать улучшению качества жизни <br>
+      покупателей через индивидуальный подход в выборе решений для <br>
+      создания комфорта и стиля.
+    </div>
+    <div id="bbb">
+      <img src="img\121.jpg" alt="Картинка" height="" width="1711">
+    </div>
+    <div id="about">
+      Мебельная фабрика «Skavysh Corporation», основанная в 2000 году, представляет собой одну из крупнейших компаний, производство которой  оснащено 
+      высокотехнологичным европейским оборудованием. «Skavysh Corporation» занимает 
+      лидирующее место среди российских производителей мебели, который ежегодно 
+      выпускает новинки и радует покупателей прекрасной <br>мебелью и отличным сервисом.
+      <br>
+      <br>
+      Современная производственная база, экологичные материалы и передовые технологии
+      позволяют нам выпускать качественную продукцию по доступной цене, а успешная 
+      система <br>управления помогает максимально быстро реагировать на внешние изменения 
+      и эффективно управлять рыночными процессами.
+    </div>
+    <div id="me">
+      ПОЧЕМУ БОЛЕЕ 10 000 КЛИЕНТОВ ВЫБРАЛИ НАС?
+    </div>
+    <section class="advantages">
+      <div class="container">
+        <!-- Карточка 1 -->
+        <div class="advantage-item">
+          <h3>Превосходное качество</h3>
+          <p>Мы гордимся тем, что вся наша мебель изготавливается из высококачественных материалов с использованием передовых технологий.</p>
+        </div>
+        <div class="advantage-item">
+          <h3>Мебель, созданная специально для вас</h3>
+          <p>Мы ценим каждого клиента и стремимся удовлетворить все их потребности.</p>
+        </div>
+        <div class="advantage-item">
+          <h3>Широкий выбор мебели на заказ</h3>
+          <p>В нашем каталоге представлено огромное разнообразие мебели, соответствующее разным стилям и потребностям.</p>
+        </div>
+        <div class="advantage-item">
+          <h3>Гарантия и сервис</h3>
+          <p>Мы предоставляем гарантию на всю новую мебель в размере 12 месяцев и постгарантийное обслуживание. Любые возникающие вопросы мы поможем решить.</p>
+        </div>
+      </div>
+    </section>
+</div>
+<div id="footer">
+  <div id="logot">
+    <a href="glaw.html"> <img src="img\logot.png" alt="Картинка" height="130" width=""></a>
+</div>
+<div id="mesto">
+  Интернет-магазин мебели «Skavysh Corporation» <br>
+  © 2000 - 2025 Все права защищены
+</div>
+<div id="mop">
+  <h3>Магазин</h3>
+  <br>
+        <a href="glaw.html" class="change-color-link">Главная</a><br>
+        <a href="catalog.html" class="change-color-link">Каталог</a><br>
+        <a href="about.html" class="change-color-link">О нас</a><br>
+</div>
+<div id="mmaa">
+  <h3>Наши соц сети</h3>
+  <br>
+  <div style="margin-top: 10px; margin-left: 30px;">
+    <a href="https://vk.com/mebelkom_com?ysclid=ma84gyyldq468460055" style="margin: 0 10px; margin-left: -10px;">
+      <img src="img/999.png" alt="Facebook" width="48" height="48">
+    </a>
+    <a href="https://t.me/mebelkrk" style="margin: 0 10px;">
+      <img src="img/99.png" alt="Instagram" width="48" height="48">
+    </a>
+  </div>
+</div>
+<div id="mup">
+  <h3>Контакты</h3>
+  <br>
+  г. Красноярск, ул. Красраб 160/46<br>
+  <h5>Пн-Сб 10:00-19:00, Вс 10:00-18:00</h5>
+  8 (913) 555-12-44<br>
+  8 (391) 555-12-44<br>
+  <a href="#" class="change-color-link">SkavyshCorp@mail.ru</a><br>
+  <br>
+</div>
+</div>
+    </div>
+    </div>
+    </body>
+</html>

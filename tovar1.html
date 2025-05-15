@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<meta charset="utf-8">
+<title>Диван Pero 2-х местный FIRST</title>
+<link rel="shortcut icon" href="img/zer.png"  type="image/x-icon">
+<link rel="stylesheet" href="style.css">
+<script src="glaw.js" defer></script>
+    </head>
+    <body>
+        <div id="mmm">
+        <div id="header">
+<div id="menu">
+    <a href="vxod.html" target="blank" class="buton1">Войти</a>
+    <div id="logo">
+        <a href="glaw.html"> <img src="img\logo.png" alt="Картинка" height="130" width=""></a>
+    </div>
+    <div id="slogan">
+      Гостиная <br>
+      вашей мечты
+    </div>
+    <div class="search-container">
+      <form onsubmit="return false;">
+        <input type="text" id="searchInput" placeholder="Кто ищет — тот найдет">
+      </form>
+      <ul id="suggestions" class="suggestions"></ul>
+    </div>
+    <ul id="navbar">
+        <b><li><a href="glaw.html" class="active">Главная</a></li></b>
+        <b><li><a href="catalog.html" class="active">Каталог</a></li></b>
+        <b><li><a href="about.html" class="active">О нас</a></li></b>
+        <b><li><a href="basket.html" class="active">Корзина </a></li></b>
+      </ul>
+</div>
+<div id="centerrrq">
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // 🔹 Массив товаров — обрабатывается на всех страницах
+    const products = [
+    { title: "Диван Pero 2-х местный FIRST", url: "#" },
+    { title: "Комод Soho белая", url: "#" },
+    { title: "Шкаф угловой Soho беж", url: "#" },
+    { title: "Кресло Villaggio с подлокотниками", url: "#" },
+    { title: "Стол журнальный Sheffilton CT38", url: "#" },
+    { title: "Стол журнальный Бруклин", url: "#" },
+    { title: "Диван Brownie Memori Basic", url: "#" },
+    { title: "Комод Montreal серый", url: "#" },
+    { title: "Шкаф угловой Montreal серый", url: "#" },
+    { title: "Кресло Brioche FIRST", url: "#" },
+    { title: "Кресло Brioche Premier", url: "#" },
+    { title: "Стол журнальный Эйден", url: "#" },
+    { title: "Диван Monaco FIRST левый", url: "#" },
+    { title: "Тумба под телевизор Montreal", url: "#" },
+    { title: "Шкаф четырехстворчатый Soho", url: "#" },
+    { title: "Шкаф трехстворчатый Montreal", url: "#" },
+    { title: "Кресло качалка Souffle Preston 960", url: "#" },
+    { title: "Журнальные столы Стелла", url: "#" },
+    { title: "Диван Brioche Memori FIRST", url: "#" },
+    { title: "Комод Altea", url: "#" },
+    { title: "Стол журнальный Кассо", url: "#" },
+    { title: "Шкаф угловой Rimini с зеркалом", url: "#" },
+    { title: "Кресло Brownie Memori FIRST", url: "#" },
+    { title: "Комод Chelsea серая со столом", url: "#" },
+    { title: "Диван Pero угловой Basic", url: "#" },
+    { title: "Шкаф угловой Soho серый", url: "#" },
+    { title: "Кресло Pero FIRST", url: "#" },
+    { title: "Комод Soho графит", url: "#" },
+    { title: "Диван Brownie Memori Premier", url: "#" },
+    { title: "Журнальный стол Джуан", url: "#" },
+  ];
+    const searchInput = document.getElementById("searchInput");
+    const suggestions = document.getElementById("suggestions");
+    // Проверка на наличие элементов (чтобы не было ошибок на других страницах)
+    if (!searchInput || !suggestions) return;
+    function updateSuggestions() {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        suggestions.style.display = "none";
+        suggestions.innerHTML = "";
+        return;
+      }
+      // Разбиваем запрос на слова
+      const queryWords = query.split(" ").filter(word => word !== "");
+      // Фильтруем товары, проверяя что все слова присутствуют в названии товара
+      const matches = products.filter(product => {
+        const title = product.title.toLowerCase();
+        return queryWords.every(word => title.includes(word));
+      });
+      if (matches.length === 0) {
+        suggestions.innerHTML = "<li style='padding: 5px 10px;'>Ничего не найдено</li>";
+        suggestions.style.display = "block";
+        return;
+      }
+      suggestions.innerHTML = matches.map(product => `
+        <li style="padding: 5px 10px; border-bottom: 1px solid #eee;">
+          <a href="${product.url}" style="text-decoration: none; color: inherit;">${product.title}</a>
+        </li>
+      `).join("");
+      suggestions.style.display = "block";
+    }
+    searchInput.addEventListener("input", updateSuggestions);
+    document.addEventListener("click", (e) => {
+      if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+        suggestions.style.display = "none";
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+  // здесь перечисляем ваши локальные файлы
+  const images = [
+    'img/1.jpg',
+    'img/1.1.jpg',
+    'img/1.2.jpg',
+    'img/1.3.jpg',
+    'img/1.4.jpg'
+  ];
+
+  let current = 0;
+  const mainImg = document.querySelector('.main-img');
+  const thumbs  = document.querySelectorAll('.thumb');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+
+  function updateSlider(idx) {
+    current = (idx + images.length) % images.length;
+    mainImg.style.opacity = 0;
+    setTimeout(() => {
+      mainImg.src = images[current];
+      mainImg.style.opacity = 1;
+    }, 200);
+    thumbs.forEach(t => t.classList.remove('active'));
+    thumbs[current].classList.add('active');
+  }
+
+  prevBtn.addEventListener('click', () => updateSlider(current - 1));
+  nextBtn.addEventListener('click', () => updateSlider(current + 1));
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () =>
+      updateSlider(+thumb.dataset.index)
+    );
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tab-list li');
+  const contents = document.querySelectorAll('.tab-content');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // очистить все
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      // активировать выбранный
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+});
+document.addEventListener("DOMContentLoaded", function () {
+  const addButtons = document.querySelectorAll(".add-to-cart");
+
+  addButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const productElem = this.closest(".product-main");
+      if (!productElem) return;
+
+      // 1. Название
+      const title = productElem
+        .querySelector(".title")
+        .innerText
+        .trim();
+
+      // 2. Артикул
+      const articleText = productElem
+        .querySelector(".sku")
+        ?.innerText || "";
+      const article = articleText.replace(/\D/g, "");
+      // 3. Текущая (со скидкой) цена
+      const priceText = productElem
+        .querySelector(".current")
+        .innerText;
+      const price = parseInt(priceText.replace(/\D/g, ""), 10) || 0;
+      // 4. Старая цена (если есть)
+      const oldPriceText = productElem
+        .querySelector(".old")
+        ?.innerText || priceText;
+      const oldPrice = parseInt(oldPriceText.replace(/\D/g, ""), 10) || price;
+      // 5. Изображение
+      const imgEl = productElem.querySelector(".main-img");
+      const image = imgEl ? imgEl.src : "";
+      // Загрузка существующей корзины
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      // Проверяем, есть ли этот товар (по title + article)
+      const existing = cartItems.find(item =>
+        item.title === title && item.article === article
+      );
+      if (existing) {
+        // Увеличиваем количество (макс. 13)
+        if (existing.quantity < 13) existing.quantity++;
+      } else {
+        // Иначе добавляем новый объект
+        cartItems.push({ title, article, price, oldPrice, image, quantity: 1 });
+      }
+      // Сохраняем обратно в localStorage
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      // ---- А здесь ваша анимация перелёта или уведомление ----
+      // Пример простого алерта:
+      alert("Товар добавлен в корзину!");
+    });
+  });
+});
+    </script>
+    <style>
+        .product-slider { max-width: 700px; margin: 0 auto; }
+.main-slide { position: relative; overflow: hidden; }
+.main-slide .main-img {
+  width: 100%; display: block; transition: opacity .3s ease;
+}
+.main-slide .nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: white; border: none;
+  padding: 8px 12px; cursor: pointer; font-size: 18px;
+}
+.prev { left: 5px; }
+.next { right: 5px; }
+.thumbnails {
+  display: flex; justify-content: center; gap: 8px;
+  margin-top: 10px; overflow-x: auto;
+}
+.thumbnails .thumb {
+  width: 120px; height: 90px; object-fit: cover;
+  cursor: pointer; opacity: .6; transition: opacity .2s;
+}
+.thumbnails .thumb.active,
+.thumbnails .thumb:hover {
+  opacity: 1; border: 1px solid black;
+}
+#spaq{
+  margin-left: 150px;
+}
+h1{
+text-align: left;
+color: #8e7f5c;
+}
+    </style>
+    <div class="product-main">
+        <!-- левый блок: ваш слайдер -->
+         <div id="spaq">
+        <div class="product-slider">
+            <div class="main-slide">
+              <button class="nav prev">&lt;</button>
+              <img src="img/1.jpg" alt="" class="main-img">
+              <button class="nav next">&gt;</button>
+            </div>
+            <div class="thumbnails">
+              <img src="img/1.jpg" data-index="0" class="thumb active" alt="">
+              <img src="img/1.1.jpg" data-index="1" class="thumb" alt="">
+              <img src="img/1.2.jpg" data-index="2" class="thumb" alt="">
+              <img src="img/1.3.jpg" data-index="3" class="thumb" alt="">
+              <img src="img/1.4.jpg" data-index="4" class="thumb" alt="">
+            </div>
+        </div>
+         </div>
+        <!-- правый блок: информация о товаре и кнопки -->
+        <aside class="product-info">
+          <br>
+          <br>
+          <br>
+          <br>
+          <h1 class="title">Диван Pero 2-х местный FIRST</h1>
+          <div class="sku">Артикул: 872276</div>
+          <br>
+          <br>
+          <div class="price">
+            <span class="current">79 000 ₽</span>
+            <span class="old">112 859 ₽</span>
+            <span class="discount">-30%</span>
+          </div>
+          <div class="actions">
+            <button class="product__btn add-to-cart">Добавить в корзину</button>
+          </div>
+          <div class="delivery-info">
+            <div><strong>Доставка</strong> 14—30 дней</div>
+            <div><strong>Стоимость в будний день</strong> 990 ₽</div>
+          </div>
+        </aside>
+      </div>
+      <section class="tabs">
+        <ul class="tab-list">
+          <li data-tab="char" class="active">Характеристики</li>
+          <li data-tab="reviews" id="reviews-tab">Отзывы</li>
+          <li data-tab="delivery">Доставка</li>
+          <li data-tab="stores">Наши магазины</li>
+        </ul>
+      
+        <!-- содержимое табов -->
+        <div class="tab-content active" id="char">
+          <div class="characteristics">
+            <div class="col">
+              <h3>Основные характеристики</h3>
+              <table>
+                <tr><td>Коллекция</td><td>Бруклин белый</td></tr>
+                <tr><td>Артикул</td><td>872276</td></tr>
+                <tr><td>Вес (НЕТТО)</td><td>36.83 кг</td></tr>
+                <tr><td>Производитель</td><td>Skavysh Corporation</td></tr>
+              </table>
+              <h3>Размеры</h3>
+              <table>
+                <tr><td>Размер</td><td>Ш 241 × В 83 × Г 97 см</td></tr>
+              </table>
+              <h3>Материалы</h3>
+              <table>
+                <tr><td>Материал</td><td>Брус</td></tr>
+              </table>
+            </div>
+            <div class="col">
+              <h3>Особенности</h3>
+              <table>
+                <tr><td>Размер спального места</td><td>207 × 150 см</td></tr>
+              </table>
+              <h3>Технические особенности</h3>
+              <table>
+                <tr><td>Механизм трансформации</td><td>Еврокнижка</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="reviews">
+          <!-- тут ваш блок с отзывами -->
+          <p>Здесь отзывы…</p>
+        </div>
+        <div class="tab-content" id="delivery">
+          <div id="doc">Часы работы: пн-пт, с 10:00 до 19:00<br>
+            Доставка: доставка заказов пн-пт, с 15:00 до 21:00.<br>
+            <br>
+            <h3>Доставка:</h3><br>
+            Доставка заказов в пределах Красноярска – 490р.<br>
+            Доставка  заказов за пределы Красноярска – 20р/км в одну сторону.<br>
+            <br>
+            <h3>Стоимость подъема:</h3><br>
+            Подъем на лифте – бесплатно;<br>
+            Подъем при отсутствии лифта – 100р/этаж;<br>
+            <br>
+            <h3>Способы оплаты:</h3><br>
+            Возможность оплаты наличными: есть.<br>
+            Возможность оплаты картой: нет.</div>
+        </div>
+        <div class="tab-content" id="stores">
+          <div id="jdems">
+            Ждем вас в наших магазинах
+          </div>
+          <div id="mags">
+            <a href="https://yandex.ru/maps/-/CHR1FUop" class="change-color-link" style="font-size: 18px;">Просп. имени Газеты Красноярский Рабочий, 160, стр. 46</a><br>
+                <a href="https://yandex.ru/maps/-/CHR1F424" class="change-color-link"style="font-size: 18px;">Просп. имени Газеты Красноярский Рабочий, 27, стр. 92</a><br>
+                <a href="https://yandex.ru/maps/-/CHR1FJzN" class="change-color-link" style="font-size: 18px;">ул. Академика Киренского, 89</a><br>
+                <a href="https://yandex.ru/maps/-/CHR1FNmm" class="change-color-link" style="font-size: 18px;">ул. Молокова, 39</a><br>
+          </div>
+          <div id="gorods">
+            <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/62/krasnoyarsk/search/%D0%9C%D0%B5%D0%B1%D0%B5%D0%BB%D1%8C%D0%BA%D0%BE%D0%BC%D0%BF%D0%BB%D0%B5%D0%BA%D1%82%20%D1%82%D0%BE%D1%80%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D1%8F/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Мебелькомплект торговая компания в Красноярске</a><a href="https://yandex.ru/maps/62/krasnoyarsk/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;">Красноярск</a><iframe src="https://yandex.ru/map-widget/v1/?ll=92.928307%2C56.000829&mode=search&sctx=ZAAAAAgBEAAaKAoSCQT%2B8PPfOFdAEXaMKy6OAExAEhIJH%2FMBgc6kyT8Rpki%2BEkiJsT8iBgABAgMEBSgKOABAPkgBagJydZ0BzczMPaABAKgBAL0BNgNxbMIBFaTIn48EhdLBn9EDst%2F8tAafy%2FW4BIICPtCc0LXQsdC10LvRjNC60L7QvNC%2F0LvQtdC60YIg0YLQvtGA0LPQvtCy0LDRjyDQutC%2B0LzQv9Cw0L3QuNGPigIAkgIAmgIMZGVza3RvcC1tYXBzqgInMTIwODEwNTQxODUsNjAwMzU3NSw2MDAyNDIzLDIyMjk5MTkzMjI0sAIB&sll=92.928307%2C56.000829&sspn=0.303662%2C0.103838&text=%D0%9C%D0%B5%D0%B1%D0%B5%D0%BB%D1%8C%D0%BA%D0%BE%D0%BC%D0%BF%D0%BB%D0%B5%D0%BA%D1%82%20%D1%82%D0%BE%D1%80%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D1%8F&z=12.2" width="1000" height="450" frameborder="1" allowfullscreen="true" style=" border: 1px solid white; position:relative;"></iframe></div>
+        </div>
+        </div>
+      </section>
+</div>
+<br>
+<br>
+<br>
+<div id="footer">
+  <div id="logot">
+    <a href="glaw.html"> <img src="img\logot.png" alt="Картинка" height="130" width=""></a>
+</div>
+<div id="mesto">
+  Интернет-магазин мебели «Skavysh Corporation» <br>
+  © 2000 - 2025 Все права защищены
+</div>
+<div id="mop">
+  <h3>Магазин</h3>
+  <br>
+        <a href="glaw.html" class="change-color-link">Главная</a><br>
+        <a href="catalog.html" class="change-color-link">Каталог</a><br>
+        <a href="about.html" class="change-color-link">О нас</a><br>
+</div>
+<div id="mmaa">
+  <h3>Наши соц сети</h3>
+  <br>
+  <div style="margin-top: 10px; margin-left: 30px;">
+    <a href="https://vk.com/mebelkom_com?ysclid=ma84gyyldq468460055" style="margin: 0 10px; margin-left: -10px;">
+      <img src="img/999.png" alt="Facebook" width="48" height="48">
+    </a>
+    <a href="https://t.me/mebelkrk" style="margin: 0 10px;">
+      <img src="img/99.png" alt="Instagram" width="48" height="48">
+    </a>
+  </div>
+</div>
+<div id="mup">
+  <h3>Контакты</h3>
+  <br>
+  г. Красноярск, ул. Красраб 160/46<br>
+  <h5>Пн-Сб 10:00-19:00, Вс 10:00-18:00</h5>
+  8 (913) 555-12-44<br>
+  8 (391) 555-12-44<br>
+  <a href="#" class="change-color-link">SkavyshCorp@mail.ru</a><br>
+  <br>
+</div>
+</div>
+    </div>
+    </div>
+    </body>
+</html>

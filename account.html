@@ -1,0 +1,342 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+<meta charset="utf-8">
+<title>Личный кабинет</title>
+<link rel="shortcut icon" href="img/zer.png"  type="image/x-icon">
+<link rel="stylesheet" href="style.css">
+<script src="glaw.js" defer></script>
+<style>
+    /* Контейнер */
+    .account-container { max-width: 600px; margin: 40px auto; padding: 0 20px; margin-right: 1230px;}
+    .account-tabs { display: flex; list-style: none; padding: 0; margin-bottom: 24px; border-bottom: 2px solid #e0e0e0; }
+    .account-tabs li { flex: 1; text-align: center; padding: 12px 0; cursor: pointer; font-weight: 500; position: relative; }
+    .account-tabs li.active { color: #333; }
+    .account-tabs li.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background-color: #333; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .profile-form { display: flex; flex-direction: column; gap: 16px; }
+    .profile-form label { font-weight: 500; margin-bottom: 4px; }
+    .profile-form input { width: 100%; padding: 8px; border: none; border-bottom: 1px solid #ccc; font-size: 16px; }
+    .profile-form input:focus { border-bottom-color: #333; }
+    .avatar-preview { width: 100px; height: 100px; border-radius: 50%; background: #f0f4f8; display: flex; align-items: center; justify-content: center; font-size: 36px; color: #fff; position: relative; overflow: hidden; margin-bottom: 8px; }
+    .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-preview input[type=file] { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .profile-form button { margin-top: 16px; padding: 12px; font-size: 16px; background: #333; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .cards-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  </style>
+    </head>
+    <body>
+        <div id="mmm">
+        <div id="header">
+<div id="menu">
+    <a href="vxod.html" target="blank" class="buton1">Войти</a>
+    <div id="logo">
+        <a href="glaw.html"> <img src="img\logo.png" alt="Картинка" height="130" width=""></a>
+    </div>
+    <div id="slogan">
+      Гостиная <br>
+      вашей мечты
+    </div>
+    <div class="search-container">
+      <form onsubmit="return false;">
+        <input type="text" id="searchInput" placeholder="Кто ищет — тот найдет">
+      </form>
+      <ul id="suggestions" class="suggestions"></ul>
+    </div>
+    <ul id="navbar">
+        <b><li><a href="glaw.html" class="active">Главная</a></li></b>
+        <b><li><a href="catalog.html" class="active">Каталог</a></li></b>
+        <b><li><a href="about.html" class="active">О нас</a></li></b>
+        <b><li><a href="basket.html" class="active">Корзина</a></li></b>
+      </ul>
+</div>
+<div id="centerl">
+ <main class="account-container">
+      <ul class="account-tabs">
+        <li data-tab="profile" class="active">Мои данные</li>
+        <li data-tab="favorites">Избранное</li>
+        <li data-tab="orders">Мои заказы</li>
+      </ul>
+
+      <div id="profile" class="tab-content active">
+        <form class="profile-form" id="profileForm">
+          <div>
+            <label>Аватар</label>
+            <div class="avatar-preview" id="avatarPreview"><span>ДС</span>
+              <input type="file" id="avatarInput" accept="image/*">
+            </div>
+          </div>
+          <div>
+            <label for="lastName">Фамилия</label>
+            <input type="text" id="lastName" name="lastName">
+          </div>
+          <div>
+            <label for="firstName">Имя</label>
+            <input type="text" id="firstName" name="firstName">
+          </div>
+          <div>
+            <label for="birthDate">Дата рождения</label>
+            <input type="date" id="birthDate" name="birthDate">
+          </div>
+          <div>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email">
+          </div>
+          <div>
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div>
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="Новый пароль">
+          </div>
+          <button type="submit">Сохранить</button>
+        </form>
+      </div>
+ <div id="favorites" class="tab-content">
+        <div class="cards-grid" id="favGrid"></div>
+      </div>
+      <div id="orders" class="tab-content">
+        <div class="cards-grid" id="ordersGrid"><p>У вас пока нет заказов.</p></div>
+      </div>
+    </main>
+</div>
+<div id="footer">
+  <div id="logot">
+    <a href="glaw.html"> <img src="img\logot.png" alt="Картинка" height="130" width=""></a>
+</div>
+<div id="mesto">
+  Интернет-магазин мебели «Skavysh Corporation» <br>
+  © 2000 - 2025 Все права защищены
+</div>
+<div id="mop">
+  <h3>Магазин</h3>
+  <br>
+        <a href="glaw.html" class="change-color-link">Главная</a><br>
+        <a href="catalog.html" class="change-color-link">Каталог</a><br>
+        <a href="about.html" class="change-color-link">О нас</a><br>
+</div>
+<div id="mmaa">
+  <h3>Наши соц сети</h3>
+  <br>
+  <div style="margin-top: 10px; margin-left: 30px;">
+    <a href="https://vk.com/mebelkom_com?ysclid=ma84gyyldq468460055" style="margin: 0 10px; margin-left: -10px;">
+      <img src="img/999.png" alt="Facebook" width="48" height="48">
+    </a>
+    <a href="https://t.me/mebelkrk" style="margin: 0 10px;">
+      <img src="img/99.png" alt="Instagram" width="48" height="48">
+    </a>
+  </div>
+</div>
+<div id="mup">
+  <h3>Контакты</h3>
+  <br>
+  г. Красноярск, ул. Красраб 160/46<br>
+  <h5>Пн-Сб 10:00-19:00, Вс 10:00-18:00</h5>
+  8 (913) 555-12-44<br>
+  8 (391) 555-12-44<br>
+  <a href="#" class="change-color-link">SkavyshCorp@mail.ru</a><br>
+  <br>
+</div>
+</div>
+    </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Переключение вкладок
+    const tabs = document.querySelectorAll('.account-tabs li');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    }));
+
+    const IDS_KEY = 'favorites';
+    const ITEMS_KEY = 'favoriteItems';
+    const favGrid = document.getElementById('favGrid');
+
+    // Рендер избранного
+    function renderFavorites() {
+      const items = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+      favGrid.innerHTML = '';
+      if (!items.length) {
+        favGrid.innerHTML = '<p>Пока ничего нет в избранном.</p>';
+        return;
+      }
+      items.forEach(item => {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = item.html;
+        const article = tmp.firstElementChild;
+        favGrid.append(article);
+      });
+    }
+
+    renderFavorites();
+
+    // Делегирование кликов по сердечкам внутри избранного
+    favGrid.addEventListener('click', e => {
+      const btn = e.target.closest('.product__favorite');
+      if (!btn) return;
+      const article = btn.closest('.product');
+      const id = article.dataset.id;
+      let favIds = JSON.parse(localStorage.getItem(IDS_KEY) || '[]');
+      let favItems = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+      const idx = favIds.indexOf(id);
+      if (idx > -1) {
+        favIds.splice(idx, 1);
+        favItems = favItems.filter(x => x.id !== id);
+      }
+      localStorage.setItem(IDS_KEY, JSON.stringify(favIds));
+      localStorage.setItem(ITEMS_KEY, JSON.stringify(favItems));
+      renderFavorites();
+    });
+
+    // Слушаем storage для синхронизации
+    window.addEventListener('storage', e => {
+      if (e.key === ITEMS_KEY) renderFavorites();
+    });
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+  const addButtons = document.querySelectorAll(".add-to-cart");
+
+  addButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const productElem = this.closest(".product");
+      if (!productElem) return;
+
+      // 1. Название
+      const title = productElem
+        .querySelector(".product__title a")
+        .innerText
+        .trim();
+
+      // 2. Артикул
+      const articleText = productElem
+        .querySelector(".product__info .product__term")
+        ?.innerText || "";
+      const article = articleText.replace(/\D/g, "");
+
+      // 3. Текущая (со скидкой) цена
+      const priceText = productElem
+        .querySelector(".product-price__current")
+        .innerText;
+      const price = parseInt(priceText.replace(/\D/g, ""), 10) || 0;
+
+      // 4. Старая цена (если есть)
+      const oldPriceText = productElem
+        .querySelector(".product-price__old")
+        ?.innerText || priceText;
+      const oldPrice = parseInt(oldPriceText.replace(/\D/g, ""), 10) || price;
+
+      // 5. Изображение
+      const imgEl = productElem.querySelector(".image-switch__img img");
+      const image = imgEl ? imgEl.src : "";
+
+      // Загрузка существующей корзины
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      // Проверяем, есть ли этот товар (по title + article)
+      const existing = cartItems.find(item =>
+        item.title === title && item.article === article
+      );
+
+      if (existing) {
+        // Увеличиваем количество (макс. 13)
+        if (existing.quantity < 13) existing.quantity++;
+      } else {
+        // Иначе добавляем новый объект
+        cartItems.push({ title, article, price, oldPrice, image, quantity: 1 });
+      }
+
+      // Сохраняем обратно в localStorage
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+      // ---- А здесь ваша анимация перелёта или уведомление ----
+      // Пример простого алерта:
+      alert("Товар добавлен в корзину!");
+
+      // Или, например, анимация иконки:
+      // const cartLink = document.querySelector('.buton-cart');
+      // cartLink.classList.add("animate-cart");
+      // setTimeout(() => cartLink.classList.remove("animate-cart"), 500);
+    });
+  });
+});
+document.addEventListener("DOMContentLoaded", function () {
+  // 🔹 Массив товаров — обрабатывается на всех страницах
+  const products = [
+    { title: "Диван Pero 2-х местный FIRST", url: "#" },
+    { title: "Комод Soho белая", url: "#" },
+    { title: "Шкаф угловой Soho беж", url: "#" },
+    { title: "Кресло Villaggio с подлокотниками", url: "#" },
+    { title: "Стол журнальный Sheffilton CT38", url: "#" },
+    { title: "Стол журнальный Бруклин", url: "#" },
+    { title: "Диван Brownie Memori Basic", url: "#" },
+    { title: "Комод Montreal серый", url: "#" },
+    { title: "Шкаф угловой Montreal серый", url: "#" },
+    { title: "Кресло Brioche FIRST", url: "#" },
+    { title: "Кресло Brioche Premier", url: "#" },
+    { title: "Стол журнальный Эйден", url: "#" },
+    { title: "Диван Monaco FIRST левый", url: "#" },
+    { title: "Тумба под телевизор Montreal", url: "#" },
+    { title: "Шкаф четырехстворчатый Soho", url: "#" },
+    { title: "Шкаф трехстворчатый Montreal", url: "#" },
+    { title: "Кресло качалка Souffle Preston 960", url: "#" },
+    { title: "Журнальные столы Стелла", url: "#" },
+    { title: "Диван Brioche Memori FIRST", url: "#" },
+    { title: "Комод Altea", url: "#" },
+    { title: "Стол журнальный Кассо", url: "#" },
+    { title: "Шкаф угловой Rimini с зеркалом", url: "#" },
+    { title: "Кресло Brownie Memori FIRST", url: "#" },
+    { title: "Комод Chelsea серая со столом", url: "#" },
+    { title: "Диван Pero угловой Basic", url: "#" },
+    { title: "Шкаф угловой Soho серый", url: "#" },
+    { title: "Кресло Pero FIRST", url: "#" },
+    { title: "Комод Soho графит", url: "#" },
+    { title: "Диван Brownie Memori Premier", url: "#" },
+    { title: "Журнальный стол Джуан", url: "#" },
+  ];
+  const searchInput = document.getElementById("searchInput");
+  const suggestions = document.getElementById("suggestions");
+  // Проверка на наличие элементов (чтобы не было ошибок на других страницах)
+  if (!searchInput || !suggestions) return;
+  function updateSuggestions() {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      suggestions.style.display = "none";
+      suggestions.innerHTML = "";
+      return;
+    }
+    // Разбиваем запрос на слова
+    const queryWords = query.split(" ").filter(word => word !== "");
+    // Фильтруем товары, проверяя что все слова присутствуют в названии товара
+    const matches = products.filter(product => {
+      const title = product.title.toLowerCase();
+      return queryWords.every(word => title.includes(word));
+    });
+    if (matches.length === 0) {
+      suggestions.innerHTML = "<li style='padding: 5px 10px;'>Ничего не найдено</li>";
+      suggestions.style.display = "block";
+      return;
+    }
+    suggestions.innerHTML = matches.map(product => `
+      <li style="padding: 5px 10px; border-bottom: 1px solid #eee;">
+        <a href="${product.url}" style="text-decoration: none; color: inherit;">${product.title}</a>
+      </li>
+    `).join("");
+    suggestions.style.display = "block";
+  }
+  searchInput.addEventListener("input", updateSuggestions);
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+      suggestions.style.display = "none";
+    }
+  });
+});
+</script>
+
+    </body>
+</html>

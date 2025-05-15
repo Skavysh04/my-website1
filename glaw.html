@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<meta charset="utf-8">
+<title>Главная</title>
+<link rel="shortcut icon" href="img/zer.png"  type="image/x-icon">
+<link rel="stylesheet" href="style.css">
+<script src="glaw.js" defer></script>
+    </head>
+    <body>
+        <div id="mmm">
+        <div id="header">
+<div id="menu">
+    <a href="vxod.html" target="blank" class="buton1">Войти</a>
+    <div id="logo">
+        <a href="glaw.html"> <img src="img\logo.png" alt="Картинка" height="130" width=""></a>
+    </div>
+    <div id="slogan">
+      Гостиная <br>
+      вашей мечты
+    </div>
+    <div class="search-container">
+      <form onsubmit="return false;">
+        <input type="text" id="searchInput" placeholder="Кто ищет — тот найдет">
+      </form>
+      <ul id="suggestions" class="suggestions"></ul>
+    </div>
+    <ul id="navbar">
+        <b><li><a href="glaw.html" class="active">Главная</a></li></b>
+        <b><li><a href="catalog.html" class="active">Каталог</a></li></b>
+        <b><li><a href="about.html" class="active">О нас</a></li></b>
+        <b><li><a href="basket.html" class="active">Корзина</a></li></b>
+      </ul>
+</div>
+<div id="center">
+  <a href="catalog.html">
+    <div class="slider">
+        <div class="slides">
+          <!-- Пример слайдов. Вместо placeholder-изображений вставьте свои -->
+          <div class="slide" style="background-image: url('img/banner.png');"></div>
+            <div class="slide" style="background-image: url('img/22.jpg');"></div>
+        </div>
+      </div>
+    </a>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  // 🔹 Массив товаров — обрабатывается на всех страницах
+  const products = [
+    { title: "Диван Pero 2-х местный FIRST", url: "#" },
+    { title: "Комод Soho белая", url: "#" },
+    { title: "Шкаф угловой Soho беж", url: "#" },
+    { title: "Кресло Villaggio с подлокотниками", url: "#" },
+    { title: "Стол журнальный Sheffilton CT38", url: "#" },
+    { title: "Стол журнальный Бруклин", url: "#" },
+    { title: "Диван Brownie Memori Basic", url: "#" },
+    { title: "Комод Montreal серый", url: "#" },
+    { title: "Шкаф угловой Montreal серый", url: "#" },
+    { title: "Кресло Brioche FIRST", url: "#" },
+    { title: "Кресло Brioche Premier", url: "#" },
+    { title: "Стол журнальный Эйден", url: "#" },
+    { title: "Диван Monaco FIRST левый", url: "#" },
+    { title: "Тумба под телевизор Montreal", url: "#" },
+    { title: "Шкаф четырехстворчатый Soho", url: "#" },
+    { title: "Шкаф трехстворчатый Montreal", url: "#" },
+    { title: "Кресло качалка Souffle Preston 960", url: "#" },
+    { title: "Журнальные столы Стелла", url: "#" },
+    { title: "Диван Brioche Memori FIRST", url: "#" },
+    { title: "Комод Altea", url: "#" },
+    { title: "Стол журнальный Кассо", url: "#" },
+    { title: "Шкаф угловой Rimini с зеркалом", url: "#" },
+    { title: "Кресло Brownie Memori FIRST", url: "#" },
+    { title: "Комод Chelsea серая со столом", url: "#" },
+    { title: "Диван Pero угловой Basic", url: "#" },
+    { title: "Шкаф угловой Soho серый", url: "#" },
+    { title: "Кресло Pero FIRST", url: "#" },
+    { title: "Комод Soho графит", url: "#" },
+    { title: "Диван Brownie Memori Premier", url: "#" },
+    { title: "Журнальный стол Джуан", url: "#" },
+  ];
+  const searchInput = document.getElementById("searchInput");
+  const suggestions = document.getElementById("suggestions");
+  // Проверка на наличие элементов (чтобы не было ошибок на других страницах)
+  if (!searchInput || !suggestions) return;
+  function updateSuggestions() {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      suggestions.style.display = "none";
+      suggestions.innerHTML = "";
+      return;
+    }
+    // Разбиваем запрос на слова
+    const queryWords = query.split(" ").filter(word => word !== "");
+    // Фильтруем товары, проверяя что все слова присутствуют в названии товара
+    const matches = products.filter(product => {
+      const title = product.title.toLowerCase();
+      return queryWords.every(word => title.includes(word));
+    });
+    if (matches.length === 0) {
+      suggestions.innerHTML = "<li style='padding: 5px 10px;'>Ничего не найдено</li>";
+      suggestions.style.display = "block";
+      return;
+    }
+    suggestions.innerHTML = matches.map(product => `
+      <li style="padding: 5px 10px; border-bottom: 1px solid #eee;">
+        <a href="${product.url}" style="text-decoration: none; color: inherit;">${product.title}</a>
+      </li>
+    `).join("");
+    suggestions.style.display = "block";
+  }
+  searchInput.addEventListener("input", updateSuggestions);
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+      suggestions.style.display = "none";
+    }
+  });
+});
+document.addEventListener("DOMContentLoaded", function () {
+  const addButtons = document.querySelectorAll(".add-to-cart");
+
+  addButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const productElem = this.closest(".product");
+      if (!productElem) return;
+
+      // 1. Название
+      const title = productElem
+        .querySelector(".product__title a")
+        .innerText
+        .trim();
+
+      // 2. Артикул
+      const articleText = productElem
+        .querySelector(".product__info .product__term")
+        ?.innerText || "";
+      const article = articleText.replace(/\D/g, "");
+
+      // 3. Текущая (со скидкой) цена
+      const priceText = productElem
+        .querySelector(".product-price__current")
+        .innerText;
+      const price = parseInt(priceText.replace(/\D/g, ""), 10) || 0;
+
+      // 4. Старая цена (если есть)
+      const oldPriceText = productElem
+        .querySelector(".product-price__old")
+        ?.innerText || priceText;
+      const oldPrice = parseInt(oldPriceText.replace(/\D/g, ""), 10) || price;
+
+      // 5. Изображение
+      const imgEl = productElem.querySelector(".image-switch__img img");
+      const image = imgEl ? imgEl.src : "";
+
+      // Загрузка существующей корзины
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      // Проверяем, есть ли этот товар (по title + article)
+      const existing = cartItems.find(item =>
+        item.title === title && item.article === article
+      );
+
+      if (existing) {
+        // Увеличиваем количество (макс. 13)
+        if (existing.quantity < 13) existing.quantity++;
+      } else {
+        // Иначе добавляем новый объект
+        cartItems.push({ title, article, price, oldPrice, image, quantity: 1 });
+      }
+
+      // Сохраняем обратно в localStorage
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+      // ---- А здесь ваша анимация перелёта или уведомление ----
+      // Пример простого алерта:
+      alert("Товар добавлен в корзину!");
+
+      // Или, например, анимация иконки:
+      // const cartLink = document.querySelector('.buton-cart');
+      // cartLink.classList.add("animate-cart");
+      // setTimeout(() => cartLink.classList.remove("animate-cart"), 500);
+    });
+  });
+});
+  </script>
+      <div id="zag">
+       Хит продаж
+      </div>
+      <br>
+      <br>
+      <div id="pop">
+        <article class="product" data-category="sofa" data-brand="monaco" data-price="207160" data-id="779846">
+          <a href="#" class="product__image">
+            <div class="product__switch image-switch">
+              <div class="image-switch__item">
+                <div class="image-switch__img"><img src="img/7.jpg" alt=""></div>
+              </div>
+              <div class="image-switch__item">
+                <div class="image-switch__img"><img src="img/7.1.jpg" alt=""></div>
+              </div>
+              <div class="image-switch__item">
+                <div class="image-switch__img"><img src="img/7.2.jpg" alt=""></div>
+              </div>
+              <div class="image-switch__item">
+                <div class="image-switch__img"><img src="img/7.3.jpg" alt=""></div>
+              </div>
+            </div>
+            <ul class="product__image-pagination image-pagination" aria-hidden="true">
+              <li class="image-pagination__item"></li>
+            </ul>
+          </a>
+          <h3 class="product__title">
+            <a href="#">Диван Monaco FIRST левый</a>
+          </h3>
+          <div class="product__props">
+          </div>
+          <div class="product__info">
+            <span class="product__term">Артикул: 779846</span>
+            <span class="product__available">В наличии: 13 шт</span>
+          </div>
+          <div class="product__price product-price">
+            <span class="product-price__current">207 160 ₽</span>
+            <span class="product-price__old">295 940 ₽</span>
+          </div>
+          <div class="product__actions">
+            <button class="product__btn add-to-cart">Добавить в корзину</button>
+            <button class="product__favorite" aria-label="Добавить в избранное">
+              <!-- Непустое (outline) сердечко -->
+              <svg width="25" height="25" viewBox="0 0 24 24">
+                <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                  2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+                  14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                  6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </button>
+          </div>
+        </article>
+    <article class="product" data-id="349596">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/2.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/2.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Комод Montreal серый</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 349596</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">37 500 ₽</span>
+        <span class="product-price__old">60 500 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-id="222451">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/31.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/31.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Шкаф угловой Soho беж</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 222451</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">91 300 ₽</span>
+        <span class="product-price__old">129 900 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-id="490462">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/4.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/4.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/4.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Кресло Pero FIRST</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">  
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 490462</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">64 500 ₽</span>
+        <span class="product-price__old">92 200 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-id="879876">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/5.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/5.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Журнальный стол Джуан</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 879876</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">31 500 ₽</span>
+        <span class="product-price__old">56 000 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+  </div>
+  <br>
+  <div id="jdem">
+    Ждем вас в наших магазинах
+  </div>
+  <div id="mag">
+    <a href="https://yandex.ru/maps/-/CHR1FUop" class="change-color-link">Просп. имени Газеты Красноярский Рабочий, 160, стр. 46</a><br>
+        <a href="https://yandex.ru/maps/-/CHR1F424" class="change-color-link">Просп. имени Газеты Красноярский Рабочий, 27, стр. 92</a><br>
+        <a href="https://yandex.ru/maps/-/CHR1FJzN" class="change-color-link">ул. Академика Киренского, 89</a><br>
+        <a href="https://yandex.ru/maps/-/CHR1FNmm" class="change-color-link">ул. Молокова, 39</a><br>
+  </div>
+  <div id="gorod">
+    <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/62/krasnoyarsk/search/%D0%9C%D0%B5%D0%B1%D0%B5%D0%BB%D1%8C%D0%BA%D0%BE%D0%BC%D0%BF%D0%BB%D0%B5%D0%BA%D1%82%20%D1%82%D0%BE%D1%80%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D1%8F/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Мебелькомплект торговая компания в Красноярске</a><a href="https://yandex.ru/maps/62/krasnoyarsk/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;">Красноярск</a><iframe src="https://yandex.ru/map-widget/v1/?ll=92.928307%2C56.000829&mode=search&sctx=ZAAAAAgBEAAaKAoSCQT%2B8PPfOFdAEXaMKy6OAExAEhIJH%2FMBgc6kyT8Rpki%2BEkiJsT8iBgABAgMEBSgKOABAPkgBagJydZ0BzczMPaABAKgBAL0BNgNxbMIBFaTIn48EhdLBn9EDst%2F8tAafy%2FW4BIICPtCc0LXQsdC10LvRjNC60L7QvNC%2F0LvQtdC60YIg0YLQvtGA0LPQvtCy0LDRjyDQutC%2B0LzQv9Cw0L3QuNGPigIAkgIAmgIMZGVza3RvcC1tYXBzqgInMTIwODEwNTQxODUsNjAwMzU3NSw2MDAyNDIzLDIyMjk5MTkzMjI0sAIB&sll=92.928307%2C56.000829&sspn=0.303662%2C0.103838&text=%D0%9C%D0%B5%D0%B1%D0%B5%D0%BB%D1%8C%D0%BA%D0%BE%D0%BC%D0%BF%D0%BB%D0%B5%D0%BA%D1%82%20%D1%82%D0%BE%D1%80%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D1%8F&z=12.2" width="1000" height="450" frameborder="1" allowfullscreen="true" style=" border: 1px solid white; position:relative;"></iframe></div>
+</div>
+</div>
+<div id="footer">
+  <div id="logot">
+    <a href="glaw.html"> <img src="img\logot.png" alt="Картинка" height="130" width=""></a>
+</div>
+<div id="mesto">
+  Интернет-магазин мебели «Skavysh Corporation» <br>
+  © 2000 - 2025 Все права защищены
+</div>
+<div id="mop">
+  <h3>Магазин</h3>
+  <br>
+        <a href="glaw.html" class="change-color-link">Главная</a><br>
+        <a href="catalog.html" class="change-color-link">Каталог</a><br>
+        <a href="about.html" class="change-color-link">О нас</a><br>
+</div>
+<div id="mmaa">
+  <h3>Наши соц сети</h3>
+  <br>
+  <div style="margin-top: 10px; margin-left: 30px;">
+    <a href="https://vk.com/mebelkom_com?ysclid=ma84gyyldq468460055" style="margin: 0 10px; margin-left: -10px;">
+      <img src="img/999.png" alt="Facebook" width="48" height="48">
+    </a>
+    <a href="https://t.me/mebelkrk" style="margin: 0 10px;">
+      <img src="img/99.png" alt="Instagram" width="48" height="48">
+    </a>
+  </div>
+</div>
+<div id="mup">
+  <h3>Контакты</h3>
+  <br>
+  г. Красноярск, ул. Красраб 160/46<br>
+  <h5>Пн-Сб 10:00-19:00, Вс 10:00-18:00</h5>
+  8 (913) 555-12-44<br>
+  8 (391) 555-12-44<br>
+  <a href="#" class="change-color-link">SkavyshCorp@mail.ru</a><br>
+  <br>
+</div>
+</div>
+    </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Ключи в localStorage
+  const IDS_KEY  = 'favorites';        // для ID-шников (отметка сердечком)
+  const ITEMS_KEY = 'favoriteItems';   // для полного описания карточек
+
+  // Загрузка из хранилища
+  let favoriteIds   = JSON.parse(localStorage.getItem(IDS_KEY)  || '[]');
+  let favoriteItems = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+
+  // Помечаем уже избранные
+  document.querySelectorAll('.product').forEach(card => {
+    const id = card.dataset.id;
+    if (favoriteIds.includes(id)) {
+      const icon = card.querySelector('.heart-icon');
+      icon && icon.classList.add('active');
+    }
+  });
+
+  // Делегируем клик по сердечку
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.product__favorite');
+    if (!btn) return;
+    const card = btn.closest('.product');
+    const id = card.dataset.id;
+    const icon = btn.querySelector('.heart-icon');
+    if (!id || !icon) return;
+
+    const idx = favoriteIds.indexOf(id);
+    if (idx > -1) {
+      // убрать
+      favoriteIds.splice(idx, 1);
+      favoriteItems = favoriteItems.filter(x => x.id !== id);
+      icon.classList.remove('active');
+    } else {
+      // добавить
+      favoriteIds.push(id);
+      favoriteItems.push({
+        id,
+        img:   card.querySelector('.image-switch__img img')?.src || '',
+        title: card.querySelector('.product__title a')?.innerText.trim() || '',
+        price: card.querySelector('.product-price__current')?.innerText.trim() || ''
+      });
+      icon.classList.add('active');
+    }
+
+    // сохранить
+    localStorage.setItem(IDS_KEY, JSON.stringify(favoriteIds));
+    localStorage.setItem(ITEMS_KEY, JSON.stringify(favoriteItems));
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const IDS_KEY   = 'favorites';
+  const ITEMS_KEY = 'favoriteItems';
+
+  let favIds   = JSON.parse(localStorage.getItem(IDS_KEY)   || '[]');
+  let favItems = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+
+  // помечаем иконки
+  document.querySelectorAll('.product').forEach(card => {
+    const id = card.dataset.id;
+    if (favIds.includes(id)) {
+      card.querySelector('.heart-icon')?.classList.add('active');
+    }
+  });
+
+  document.addEventListener('click', e => {
+    const btn  = e.target.closest('.product__favorite');
+    if (!btn) return;
+    const card = btn.closest('.product');
+    const id   = card.dataset.id;
+    if (!id) return;
+
+    const idx = favIds.indexOf(id);
+    if (idx > -1) {
+      // удалить
+      favIds.splice(idx, 1);
+      favItems = favItems.filter(x => x.id !== id);
+      btn.querySelector('.heart-icon').classList.remove('active');
+    } else {
+      // добавить
+      favIds.push(id);
+      favItems.push({
+        id,
+        html: card.outerHTML   // <-- сохраняем весь HTML карточки
+      });
+      btn.querySelector('.heart-icon').classList.add('active');
+    }
+
+    localStorage.setItem(IDS_KEY,   JSON.stringify(favIds));
+    localStorage.setItem(ITEMS_KEY, JSON.stringify(favItems));
+  });
+});
+</script>
+    </body>
+</html>

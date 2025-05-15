@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Корзина</title>
+    <link rel="shortcut icon" href="img/zer.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="glaw.js" defer></script>
+    <style>
+      /* Стили корзины */
+      #basket-container { width: 90%; max-width: 1200px; margin: 20px auto; background: #fff; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 10px; font-family: 'Times New Roman', Times, serif; color: #333; }
+      .back-link { display: inline-block; margin-bottom:20px; color:#555; text-decoration:none; font-size:0.95em; transition:color .2s; }
+      .back-link:hover { color:#000; }
+      #basket-container h1 { margin:0 0 30px; font-size:2.2em; font-weight:500; }
+      .cart-item { display:flex; gap:15px; border:1px solid #ddd; border-radius:8px; overflow:hidden; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+      .cart-item .slider { width:150px; position:relative; overflow:hidden; border-right:1px solid #ddd; }
+      .cart-item .slider img { width:100%; display:block; }
+      .cart-item .info { flex:1; padding:15px; display:flex; flex-direction:column; }
+      .info .product-title { font-size:1.2em; font-weight:bold; margin-bottom:5px; color:#222; }
+      .info .product-code { font-size:0.9em; color:#777; margin-bottom:10px; }
+      .info .product-price { margin-bottom:10px; }
+      .info .product-price .old { text-decoration:line-through; color:#aaa; margin-right:8px; }
+      .info .product-price .current { color: black; font-weight:bold; }
+      .info .quantity-control { display:flex; align-items:center; gap:10px; margin-bottom:15px; }
+      .quantity-control button { padding:5px 10px; border:1px solid #ddd; background:#f9f9f9; border-radius:4px; cursor:pointer; transition:background .3s; }
+      .quantity-control button:hover { background:#eaeaea; }
+      .quantity-control span { font-size:1.1em; }
+      .info .item-total { font-size:1.1em; font-weight:bold; margin-bottom:10px; }
+      .cart-item .actions { display:flex; justify-content:flex-end; }
+      .cart-item .actions .remove { background:#cec09f; color:#fff; border:none; padding:6px 12px; font-size:0.9em; border-radius:4px; cursor:pointer; transition:background .2s, transform .1s; }
+      .cart-item .actions .remove:hover { background:#8e7f5c; }
+      .empty-cart { text-align:center; font-size:1.2em; color:#777; padding:30px 0; border:1px solid #ddd; border-radius:8px; }
+      #basket-summary { display:flex; flex-direction:column; align-items:flex-end; margin-top:20px; gap:8px; }
+      #basket-summary .line-item { width:100%; max-width:400px; display:flex; justify-content:space-between; font-size:0.95em; color:#555; }
+      #basket-summary .line-item.total { font-size:1.2em; font-weight:600; color:#222; }
+      #checkout-button { margin-top:15px; padding:14px 0; width:100%; max-width:300px; background:#cec09f; color:#fff; border:none; border-radius:6px; font-size:1em; cursor:pointer; transition:background .2s; }
+      #checkout-button:hover { background:#8e7f5c; }
+    </style>
+  </head>
+  <body>
+    <div id="mmm">
+      <div id="header">
+        <div id="menu">
+          <a href="vxod.html" target="blank" class="buton1">Войти</a>
+          <div id="logo"><a href="glaw.html"><img src="img/logo.png" alt="Картинка" height="130"></a></div>
+          <div id="slogan">Гостиная<br>вашей мечты</div>
+          <div class="search-container">
+            <form onsubmit="return false;"><input type="text" id="searchInput" placeholder="Кто ищет — тот найдет"></form>
+            <ul id="suggestions" class="suggestions"></ul>
+          </div>
+          <ul id="navbar">
+            <li><a href="glaw.html"><b>Главная</b></a></li>
+            <li><a href="catalog.html"><b>Каталог</b></a></li>
+            <li><a href="about.html"><b>О нас</b></a></li>
+            <li><a href="basket.html"><b>Корзина</b></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="ccente">
+        <div id="basket-container"></div>
+      </div>
+
+      <div id="footer">
+        <div id="logot"><a href="catalog.html"><img src="img/logot.png" alt="Картинка" height="130"></a></div>
+        <div id="mesto">Интернет-магазин мебели «Skavysh Corporation»<br>© 2000 - 2025 Все права защищены</div>
+        <div id="mop">
+          <h3>Магазин</h3><br>
+          <a href="glaw.html" class="change-color-link">Главная</a><br>
+          <a href="catalog.html" class="change-color-link">Каталог</a><br>
+          <a href="about.html" class="change-color-link">О нас</a><br>
+        </div>
+        <div id="mmaa">
+          <h3>Наши соц сети</h3><br>
+          <div style="margin-top: 10px; margin-left: 30px;">
+            <a href="https://vk.com/mebelkom_com?ysclid=ma84gyyldq468460055" style="margin: 0 10px; margin-left: -10px;"><img src="img/999.png" alt="Facebook" width="48" height="48"></a>
+            <a href="https://t.me/mebelkrk" style="margin: 0 10px;"><img src="img/99.png" alt="Instagram" width="48" height="48"></a>
+          </div>
+        </div>
+        <div id="mup">
+          <h3>Контакты</h3><br>
+          г. Красноярск, ул. Красраб 160/46<br>
+          <h5>Пн-Сб 10:00-19:00, Вс 10:00-18:00</h5>
+          8 (913) 555-12-44<br>
+          8 (391) 555-12-44<br>
+          <a href="#" class="change-color-link">SkavyshCorp@mail.ru</a><br><br>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+  // 🔹 Массив товаров — обрабатывается на всех страницах
+  const products = [
+    { title: "Диван Pero 2-х местный FIRST", url: "#" },
+    { title: "Комод Soho белая", url: "#" },
+    { title: "Шкаф угловой Soho беж", url: "#" },
+    { title: "Кресло Villaggio с подлокотниками", url: "#" },
+    { title: "Стол журнальный Sheffilton CT38", url: "#" },
+    { title: "Стол журнальный Бруклин", url: "#" },
+    { title: "Диван Brownie Memori Basic", url: "#" },
+    { title: "Комод Montreal серый", url: "#" },
+    { title: "Шкаф угловой Montreal серый", url: "#" },
+    { title: "Кресло Brioche FIRST", url: "#" },
+    { title: "Кресло Brioche Premier", url: "#" },
+    { title: "Стол журнальный Эйден", url: "#" },
+    { title: "Диван Monaco FIRST левый", url: "#" },
+    { title: "Тумба под телевизор Montreal", url: "#" },
+    { title: "Шкаф четырехстворчатый Soho", url: "#" },
+    { title: "Шкаф трехстворчатый Montreal", url: "#" },
+    { title: "Кресло качалка Souffle Preston 960", url: "#" },
+    { title: "Журнальные столы Стелла", url: "#" },
+    { title: "Диван Brioche Memori FIRST", url: "#" },
+    { title: "Комод Altea", url: "#" },
+    { title: "Стол журнальный Кассо", url: "#" },
+    { title: "Шкаф угловой Rimini с зеркалом", url: "#" },
+    { title: "Кресло Brownie Memori FIRST", url: "#" },
+    { title: "Комод Chelsea серая со столом", url: "#" },
+    { title: "Диван Pero угловой Basic", url: "#" },
+    { title: "Шкаф угловой Soho серый", url: "#" },
+    { title: "Кресло Pero FIRST", url: "#" },
+    { title: "Комод Soho графит", url: "#" },
+    { title: "Диван Brownie Memori Premier", url: "#" },
+    { title: "Журнальный стол Джуан", url: "#" },
+  ];
+  const searchInput = document.getElementById("searchInput");
+  const suggestions = document.getElementById("suggestions");
+  // Проверка на наличие элементов (чтобы не было ошибок на других страницах)
+  if (!searchInput || !suggestions) return;
+  function updateSuggestions() {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      suggestions.style.display = "none";
+      suggestions.innerHTML = "";
+      return;
+    }
+    // Разбиваем запрос на слова
+    const queryWords = query.split(" ").filter(word => word !== "");
+    // Фильтруем товары, проверяя что все слова присутствуют в названии товара
+    const matches = products.filter(product => {
+      const title = product.title.toLowerCase();
+      return queryWords.every(word => title.includes(word));
+    });
+    if (matches.length === 0) {
+      suggestions.innerHTML = "<li style='padding: 5px 10px;'>Ничего не найдено</li>";
+      suggestions.style.display = "block";
+      return;
+    }
+    suggestions.innerHTML = matches.map(product => `
+      <li style="padding: 5px 10px; border-bottom: 1px solid #eee;">
+        <a href="${product.url}" style="text-decoration: none; color: inherit;">${product.title}</a>
+      </li>
+    `).join("");
+    suggestions.style.display = "block";
+  }
+  searchInput.addEventListener("input", updateSuggestions);
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+      suggestions.style.display = "none";
+    }
+  });
+});
+      document.addEventListener('DOMContentLoaded', () => {
+        const basketContainer = document.getElementById('basket-container');
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cartItems = cartItems.map(item => ({
+          title: item.title || '',
+          article: item.article || '',
+          price: Number(item.price) || 0,
+          oldPrice: Number(item.oldPrice) || Number(item.price) || 0,
+          image: item.image || '',
+          quantity: Number(item.quantity) || 1
+        }));
+
+        function renderCart() {
+          basketContainer.innerHTML = '<a href="catalog.html" class="back-link">&larr; Вернуться в магазин</a><h1>Корзина</h1>';
+          if (!cartItems.length) {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            basketContainer.innerHTML += '<div class="empty-cart">Корзина пуста</div>';
+            updateSummary(0, 0);
+            return;
+          }
+
+          let sumOld = 0, sumCurrent = 0;
+          const itemsContainer = document.createElement('div'); itemsContainer.className = 'cart-items';
+          cartItems.forEach((item, idx) => {
+            sumOld += item.oldPrice * item.quantity;
+            sumCurrent += item.price * item.quantity;
+            const card = document.createElement('div'); card.className = 'cart-item';
+            const slider = document.createElement('div'); slider.className = 'slider';
+            const imgEl = document.createElement('img'); imgEl.src = item.image; slider.appendChild(imgEl);
+            const info = document.createElement('div'); info.className = 'info';
+            info.innerHTML = `<div class="product-title">${item.title}</div><div class="product-code">Артикул: ${item.article}</div><div class="product-price"><span class="old">${item.oldPrice} ₽</span><span class="current">${item.price} ₽</span></div>`;
+            const qtyCtrl = document.createElement('div'); qtyCtrl.className = 'quantity-control';
+            qtyCtrl.innerHTML = `<button>-</button><span>${item.quantity}</span><button>+</button>`;
+            qtyCtrl.children[0].addEventListener('click', () => { if (item.quantity > 1) item.quantity--; else cartItems.splice(idx,1); saveAndRender(); });
+            qtyCtrl.children[2].addEventListener('click', () => { if (item.quantity < 13) item.quantity++; saveAndRender(); });
+            info.appendChild(qtyCtrl);
+            const totalEl = document.createElement('div'); totalEl.className = 'item-total'; totalEl.textContent = `Сумма: ${item.price * item.quantity} ₽`;
+            info.appendChild(totalEl);
+            const actions = document.createElement('div'); actions.className = 'actions';
+            const removeBtn = document.createElement('button'); removeBtn.className = 'remove'; removeBtn.textContent = 'Удалить товар'; removeBtn.addEventListener('click', () => { cartItems.splice(idx,1); saveAndRender(); });
+            actions.appendChild(removeBtn); info.appendChild(actions);
+            card.appendChild(slider); card.appendChild(info); itemsContainer.appendChild(card);
+          });
+          basketContainer.appendChild(itemsContainer);
+          updateSummary(sumOld, sumCurrent);
+        }
+
+        function updateSummary(oldSum, currSum) {
+          const prev = document.getElementById('basket-summary'); if (prev) prev.remove();
+          const discount = oldSum - currSum;
+          const summary = document.createElement('div'); summary.id = 'basket-summary';
+          summary.innerHTML = `<div class="line-item"><span>Сумма без скидки</span><span>${oldSum} ₽</span></div><div class="line-item"><span>Скидка</span><span>-${discount} ₽</span></div><div class="line-item total"><span>Итого</span><span>${currSum} ₽</span></div><button id="checkout-button">Оформить заказ</button>`;
+          basketContainer.appendChild(summary);
+          document.getElementById('checkout-button').addEventListener('click', () => { if (!cartItems.length) alert('Корзина пуста!'); else alert('Переход к оформлению заказа...'); });
+        }
+
+        function saveAndRender() { localStorage.setItem('cartItems', JSON.stringify(cartItems)); renderCart(); }
+
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const prod = this.closest('.product'); if (!prod) return;
+            const title = prod.querySelector('.product__title a')?.innerText.trim() || '';
+            const article = prod.querySelector('.product__term')?.innerText.replace(/\D/g,'') || '';
+            const price = parseInt(prod.querySelector('.product-price__current')?.innerText.replace(/\D/g,''),10) || 0;
+            const oldPrice = parseInt(prod.querySelector('.product-price__old')?.innerText.replace(/\D/g,''),10) || price;
+            const image = prod.querySelector('.image-switch__img img')?.src || '';
+            const existing = cartItems.find(i => i.title === title && i.article === article);
+            if (existing) { if (existing.quantity < 13) existing.quantity++; } else { cartItems.push({ title, article, price, oldPrice, image, quantity: 1 }); }
+            saveAndRender();
+          });
+        });
+
+        renderCart();
+      });
+    </script>
+  </body>
+</html>

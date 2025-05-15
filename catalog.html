@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<meta charset="utf-8">
+<title>Каталог</title>
+<link rel="shortcut icon" href="img/zer.png"  type="image/x-icon">
+<link rel="stylesheet" href="style.css">
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="glaw.js" defer></script>
+    </head>
+    <body>
+        <div id="mmm">
+        <div id="header">
+<div id="menu">
+    <a href="vxod.html" target="blank" class="buton1">Войти</a>
+    <div id="logo">
+        <a href="glaw.html"> <img src="img\logo.png" alt="Картинка" height="130" width=""></a>
+    </div>
+    <div id="slogan">
+      Гостиная <br>
+      вашей мечты
+    </div>
+    <div class="search-container">
+      <form onsubmit="return false;">
+        <input type="text" id="searchInput" placeholder="Кто ищет — тот найдет">
+      </form>
+      <ul id="suggestions" class="suggestions"></ul>
+    </div>
+    <ul id="navbar">
+        <b><li><a href="glaw.html">Главная</a></li></b>
+        <b><li><a href="catalog.html">Каталог</a></li></b>
+        <b><li><a href="about.html">О нас</a></li></b>
+        <b><li><a href="basket.html">Корзина</a></li></b>
+      </ul>
+</div>
+<div id="cente">
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const categoryFilter = document.getElementById("category");
+    const brandFilter = document.getElementById("brand");
+    const minPriceFilter = document.getElementById("min-price");
+    const maxPriceFilter = document.getElementById("max-price");
+
+    const products = document.querySelectorAll(".product");
+
+    function filterProducts() {
+      const selectedCategory = categoryFilter.value;
+      const selectedBrand = brandFilter.value;
+      const minPrice = parseFloat(minPriceFilter.value) || 0;
+      const maxPrice = parseFloat(maxPriceFilter.value) || Infinity;
+
+      products.forEach(product => {
+        const category = product.dataset.category;
+        const brand = product.dataset.brand;
+        const price = parseFloat(product.dataset.price);
+
+        const matchesCategory = category === selectedCategory || selectedCategory === "";
+        const matchesBrand = brand === selectedBrand || selectedBrand === "";
+        const matchesPrice = price >= minPrice && price <= maxPrice;
+
+        if (matchesCategory && matchesBrand && matchesPrice) {
+          product.style.display = "";
+        } else {
+          product.style.display = "none";
+        }
+      });
+    }
+    // Слушаем изменения в фильтрах
+    categoryFilter.addEventListener("change", filterProducts);
+    brandFilter.addEventListener("change", filterProducts);
+    minPriceFilter.addEventListener("input", filterProducts);
+    maxPriceFilter.addEventListener("input", filterProducts);
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+  // 🔹 Массив товаров — обрабатывается на всех страницах
+  const products = [
+    { title: "Диван Pero 2-х местный FIRST", url: "#" },
+    { title: "Комод Soho белая", url: "#" },
+    { title: "Шкаф угловой Soho беж", url: "#" },
+    { title: "Кресло Villaggio с подлокотниками", url: "#" },
+    { title: "Стол журнальный Sheffilton CT38", url: "#" },
+    { title: "Стол журнальный Бруклин", url: "#" },
+    { title: "Диван Brownie Memori Basic", url: "#" },
+    { title: "Комод Montreal серый", url: "#" },
+    { title: "Шкаф угловой Montreal серый", url: "#" },
+    { title: "Кресло Brioche FIRST", url: "#" },
+    { title: "Кресло Brioche Premier", url: "#" },
+    { title: "Стол журнальный Эйден", url: "#" },
+    { title: "Диван Monaco FIRST левый", url: "#" },
+    { title: "Тумба под телевизор Montreal", url: "#" },
+    { title: "Шкаф четырехстворчатый Soho", url: "#" },
+    { title: "Шкаф трехстворчатый Montreal", url: "#" },
+    { title: "Кресло качалка Souffle Preston 960", url: "#" },
+    { title: "Журнальные столы Стелла", url: "#" },
+    { title: "Диван Brioche Memori FIRST", url: "#" },
+    { title: "Комод Altea", url: "#" },
+    { title: "Стол журнальный Кассо", url: "#" },
+    { title: "Шкаф угловой Rimini с зеркалом", url: "#" },
+    { title: "Кресло Brownie Memori FIRST", url: "#" },
+    { title: "Комод Chelsea серая со столом", url: "#" },
+    { title: "Диван Pero угловой Basic", url: "#" },
+    { title: "Шкаф угловой Soho серый", url: "#" },
+    { title: "Кресло Pero FIRST", url: "#" },
+    { title: "Комод Soho графит", url: "#" },
+    { title: "Диван Brownie Memori Premier", url: "#" },
+    { title: "Журнальный стол Джуан", url: "#" },
+  ];
+  const searchInput = document.getElementById("searchInput");
+  const suggestions = document.getElementById("suggestions");
+  // Проверка на наличие элементов (чтобы не было ошибок на других страницах)
+  if (!searchInput || !suggestions) return;
+  function updateSuggestions() {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      suggestions.style.display = "none";
+      suggestions.innerHTML = "";
+      return;
+    }
+    // Разбиваем запрос на слова
+    const queryWords = query.split(" ").filter(word => word !== "");
+    // Фильтруем товары, проверяя что все слова присутствуют в названии товара
+    const matches = products.filter(product => {
+      const title = product.title.toLowerCase();
+      return queryWords.every(word => title.includes(word));
+    });
+    if (matches.length === 0) {
+      suggestions.innerHTML = "<li style='padding: 5px 10px;'>Ничего не найдено</li>";
+      suggestions.style.display = "block";
+      return;
+    }
+    suggestions.innerHTML = matches.map(product => `
+      <li style="padding: 5px 10px; border-bottom: 1px solid #eee;">
+        <a href="${product.url}" style="text-decoration: none; color: inherit;">${product.title}</a>
+      </li>
+    `).join("");
+    suggestions.style.display = "block";
+  }
+  searchInput.addEventListener("input", updateSuggestions);
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+      suggestions.style.display = "none";
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const addButtons = document.querySelectorAll(".add-to-cart");
+
+  addButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const productElem = this.closest(".product");
+      if (!productElem) return;
+
+      // 1. Название
+      const title = productElem
+        .querySelector(".product__title a")
+        .innerText
+        .trim();
+
+      // 2. Артикул
+      const articleText = productElem
+        .querySelector(".product__info .product__term")
+        ?.innerText || "";
+      const article = articleText.replace(/\D/g, "");
+
+      // 3. Текущая (со скидкой) цена
+      const priceText = productElem
+        .querySelector(".product-price__current")
+        .innerText;
+      const price = parseInt(priceText.replace(/\D/g, ""), 10) || 0;
+
+      // 4. Старая цена (если есть)
+      const oldPriceText = productElem
+        .querySelector(".product-price__old")
+        ?.innerText || priceText;
+      const oldPrice = parseInt(oldPriceText.replace(/\D/g, ""), 10) || price;
+
+      // 5. Изображение
+      const imgEl = productElem.querySelector(".image-switch__img img");
+      const image = imgEl ? imgEl.src : "";
+
+      // Загрузка существующей корзины
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      // Проверяем, есть ли этот товар (по title + article)
+      const existing = cartItems.find(item =>
+        item.title === title && item.article === article
+      );
+
+      if (existing) {
+        // Увеличиваем количество (макс. 13)
+        if (existing.quantity < 13) existing.quantity++;
+      } else {
+        // Иначе добавляем новый объект
+        cartItems.push({ title, article, price, oldPrice, image, quantity: 1 });
+      }
+
+      // Сохраняем обратно в localStorage
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+      // ---- А здесь ваша анимация перелёта или уведомление ----
+      // Пример простого алерта:
+      alert("Товар добавлен в корзину!");
+
+      // Или, например, анимация иконки:
+      // const cartLink = document.querySelector('.buton-cart');
+      // cartLink.classList.add("animate-cart");
+      // setTimeout(() => cartLink.classList.remove("animate-cart"), 500);
+    });
+  });
+});
+  </script>
+  <div class="filters-container">
+    <div class="filter-category">
+      <label for="category">Категория</label>
+      <select id="category" name="category">
+        <option value="">Все категории</option>
+        <option value="sofa">Диваны</option>
+        <option value="dresser">Комоды</option>
+        <option value="shelf">Шкафы</option>
+        <option value="chairs">Кресла</option>
+        <option value="table">Журнальные столы</option>
+      </select>
+    </div>
+    <div class="filter-brand">
+      <label for="brand">Бренд</label>
+      <select id="brand" name="brand">
+        <option value="">Все бренды</option>
+        <option value="altea">Altea</option>
+        <option value="brioche">Brioche</option>
+        <option value="brownie">Brownie Memori</option>
+        <option value="chelsea">Chelsea</option>
+        <option value="monaco">Monaco</option>
+        <option value="montreal">Montreal</option>
+        <option value="pero">Pero</option>
+        <option value="rimini">Rimini</option>
+        <option value="sheffilton">Sheffilton</option>
+        <option value="soho">Soho</option>
+        <option value="souffle">Souffle Preston</option>
+        <option value="villaggio">Villaggio</option>
+        <option value="bryklin">Бруклин</option>
+        <option value="djyan">Джуан</option>
+        <option value="kacco">Кассо</option>
+        <option value="stela">Стела</option>
+        <option value="aden">Эйден</option>
+      </select>
+    </div>
+    <div class="filter-price">
+      <label for="price">Цена</label>
+      <div class="price-inputs">
+        <input type="number" id="min-price" placeholder="Минимум" />
+        <input type="number" id="max-price" placeholder="Максимум" />
+      </div>
+    </div>
+  </div>
+  <div id="pap">
+    <article class="product" data-category="sofa" data-brand="pero" data-price="79000" data-id="872276">
+      <a href="tovar1.html" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/1.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/1.2.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/1.3.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/1.4.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="tovar1.html">Диван Pero 2-х местный FIRST</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 872276</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">79 000 ₽</span>
+        <span class="product-price__old">112 859 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="dresser" data-brand="soho" data-price="36720" data-id="149754">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/11.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Комод Soho белая</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 149754</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">36 720 ₽</span>
+        <span class="product-price__old">51 000 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="shelf" data-brand="soho" data-price="91300" data-id="222451">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/31.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/31.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Шкаф угловой Soho беж</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 222451</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">91 300 ₽</span>
+        <span class="product-price__old">129 900 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="chairs" data-brand="villaggio" data-price="111630" data-id="490957">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/21.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/21.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/21.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Кресло Villaggio с подлокотниками</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">  
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 490957</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">111 630 ₽</span>
+        <span class="product-price__old">159 471 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="table" data-brand="sheffilton" data-price="13630" data-id="995703">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/26.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/26.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/26.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Стол журнальный Sheffilton CT38</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 995703</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">13 630 ₽</span>
+        <span class="product-price__old">24 300 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="table" data-brand="bryklin" data-price="7900" data-id="879876">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/27.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Стол журнальный Бруклин</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 879876</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">7 900 ₽</span>
+        <span class="product-price__old">14 200 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="sofa" data-brand="brownie" data-price="181470" data-id="829276">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/6.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/6.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/6.2.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/6.3.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Диван Brownie Memori Basic</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 829276</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">181 470 ₽</span>
+        <span class="product-price__old">302 448 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="dresser" data-brand="montreal" data-price="37500" data-id="349596">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/2.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/2.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Комод Montreal серый</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 349596</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">37 500 ₽</span>
+        <span class="product-price__old">60 500 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="shelf" data-brand="montreal" data-price="98210" data-id="494093">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/32.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/32.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Шкаф угловой Montreal серый</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">  
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 494093</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">98 210 ₽</span>
+        <span class="product-price__old">158 400 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="chairs" data-brand="brioche" data-price="80970" data-id="491230">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/22.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/22.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/22.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Кресло Brioche FIRST</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 491230</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">80 970 ₽</span>
+        <span class="product-price__old">134 950 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="chairs" data-brand="brioche" data-price="103330" data-id="490465">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/23.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/23.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/23.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Кресло Brioche Premier</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 490465</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">103 330 ₽</span>
+        <span class="product-price__old">172 200 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="table" data-brand="aden" data-price="12490" data-id="101016"> 
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/28.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/28.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/28.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Стол журнальный Эйден</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 101016</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">12 490  ₽</span>
+        <span class="product-price__old">22 400 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="sofa" data-brand="monaco" data-price="207160" data-id="779846">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/7.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/7.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/7.2.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/7.3.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Диван Monaco FIRST левый</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 779846</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">207 160 ₽</span>
+        <span class="product-price__old">295 940 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="dresser" data-brand="montreal" data-price="54810" data-id="490831">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/12.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/12.1.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Тумба под телевизор Montreal</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">  
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 490831</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">54 810 ₽</span>
+        <span class="product-price__old">88 400 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="shelf" data-brand="soho" data-price="78810" data-id="486846">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/33.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/33.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Шкаф четырехстворчатый Soho</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 486846</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">78 810 ₽</span>
+        <span class="product-price__old">106 500 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="shelf" data-brand="montreal" data-price="47600" data-id="489706">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/34.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/34.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Шкаф трехстворчатый Montreal</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 489706</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">47 600 ₽</span>
+        <span class="product-price__old">70 000 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="chairs" data-brand="souffle" data-price="29500" data-id="492948">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/24.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/24.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/24.2.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/24.3.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Кресло качалка Souffle Preston 960</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 492948</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">29 500 ₽</span>
+        <span class="product-price__old">39 300 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="table" data-brand="stela" data-price="16800" data-id="988138">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/29.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Журнальные столы Стелла</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 988138</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">16 800 ₽</span>
+        <span class="product-price__old">30 000 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="sofa" data-brand="brioche" data-price="247310" data-id="170826">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/9.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/9.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/9.2.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Диван Brioche Memori FIRST</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">  
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 170826</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">247 310 ₽</span>
+        <span class="product-price__old">412 179 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="dresser" data-brand="altea" data-price="12400" data-id="491296">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/13.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/13.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Комод Altea</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 491296</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">12 400 ₽</span>
+        <span class="product-price__old">18 200 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="table" data-brand="kacco" data-price="9600" data-id="988141">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/30.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/30.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/30.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Стол журнальный Кассо</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 988141</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">9 600 ₽</span>
+        <span class="product-price__old">17 300 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="shelf" data-brand="rimini" data-price="89100" data-id="488214">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/35.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/35.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Шкаф угловой Rimini с зеркалом</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 488214</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">89 100 ₽</span>
+        <span class="product-price__old">120 400 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="chairs" data-brand="brownie" data-price="61050" data-id="491253">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/25.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/25.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Кресло Brownie Memori FIRST</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 491253</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">61 050 ₽</span>
+        <span class="product-price__old">101 700 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="dresser" data-brand="chelsea" data-price="43710" data-id="488419">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/14.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/14.1.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Комод Chelsea серая со столом</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">  
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 488419</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">43 710 ₽</span>
+        <span class="product-price__old">70 500 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="sofa" data-brand="pero" data-price="111430" data-id="219496">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/8.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/8.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/8.2.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Диван Pero угловой Basic</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 219496</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">111 430 ₽</span>
+        <span class="product-price__old">159 181 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="shelf" data-brand="soho" data-price="86000" data-id="487936">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/36.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/36.1.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Шкаф угловой Soho серый</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 487936</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">86 000 ₽</span>
+        <span class="product-price__old">138 800 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="chairs" data-brand="pero" data-price="64940" data-id="490462">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/4.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/4.1.webp" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/4.2.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Кресло Pero FIRST</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 490462</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">64 940 ₽</span>
+        <span class="product-price__old">92 220 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="dresser" data-brand="soho" data-price="37870" data-id="492191">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/15.webp" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Комод Soho графит</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 492191</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">37 870 ₽</span>
+        <span class="product-price__old">52 600 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="sofa" data-brand="brownie" data-price="185010" data-id="952874">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/10.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/10.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/10.2.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Диван Brownie Memori Premier</a>
+      </h3>
+      <div class="product__props">
+        <span class="product__rating">  
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 952874</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">185 010 ₽</span>
+        <span class="product-price__old">308 353 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+    <article class="product" data-category="table" data-brand="djyan" data-price="31500" data-id="879876">
+      <a href="#" class="product__image">
+        <div class="product__switch image-switch">
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/5.1.jpg" alt=""></div>
+          </div>
+          <div class="image-switch__item">
+            <div class="image-switch__img"><img src="img/5.jpg" alt=""></div>
+          </div>
+        </div>
+        <ul class="product__image-pagination image-pagination" aria-hidden="true">
+          <li class="image-pagination__item"></li>
+        </ul>
+      </a>
+      <h3 class="product__title">
+        <a href="#">Журнальный стол Джуан</a>
+      </h3>
+      <div class="product__props">
+      </div>
+      <div class="product__info">
+        <span class="product__term">Артикул: 879876</span>
+        <span class="product__available">В наличии: 13 шт</span>
+      </div>
+      <div class="product__price product-price">
+        <span class="product-price__current">31 500 ₽</span>
+        <span class="product-price__old">56 000 ₽</span>
+      </div>
+      <div class="product__actions">
+        <button class="product__btn add-to-cart">Добавить в корзину</button>
+        <button class="product__favorite" aria-label="Добавить в избранное">
+          <!-- Непустое (outline) сердечко -->
+          <svg width="25" height="25" viewBox="0 0 24 24">
+            <path class="heart-icon" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+  </div>
+</div>
+<div id="footer">
+  <div id="logot">
+    <a href="catalog.html"> <img src="img\logot.png" alt="Картинка" height="130" width=""></a>
+</div>
+<div id="mesto">
+  Интернет-магазин мебели «Skavysh Corporation» <br>
+  © 2000 - 2025 Все права защищены
+</div>
+<div id="mop">
+  <h3>Магазин</h3>
+  <br>
+        <a href="glaw.html" class="change-color-link">Главная</a><br>
+        <a href="catalog.html" class="change-color-link">Каталог</a><br>
+        <a href="about.html" class="change-color-link">О нас</a><br>
+</div>
+<div id="mmaa">
+  <h3>Наши соц сети</h3>
+  <br>
+  <div style="margin-top: 10px; margin-left: 30px;">
+    <a href="https://vk.com/mebelkom_com?ysclid=ma84gyyldq468460055" style="margin: 0 10px; margin-left: -10px;">
+      <img src="img/999.png" alt="Facebook" width="48" height="48">
+    </a>
+    <a href="https://t.me/mebelkrk" style="margin: 0 10px;">
+      <img src="img/99.png" alt="Instagram" width="48" height="48">
+    </a>
+  </div>
+</div>
+<div id="mup">
+  <h3>Контакты</h3>
+  <br>
+  г. Красноярск, ул. Красраб 160/46<br>
+  <h5>Пн-Сб 10:00-19:00, Вс 10:00-18:00</h5>
+  8 (913) 555-12-44<br>
+  8 (391) 555-12-44<br>
+  <a href="#" class="change-color-link">SkavyshCorp@mail.ru</a><br>
+  <br>
+</div>
+</div>
+        </div>
+        </div>
+        <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Ключи в localStorage
+  const IDS_KEY  = 'favorites';        // для ID-шников (отметка сердечком)
+  const ITEMS_KEY = 'favoriteItems';   // для полного описания карточек
+
+  // Загрузка из хранилища
+  let favoriteIds   = JSON.parse(localStorage.getItem(IDS_KEY)  || '[]');
+  let favoriteItems = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+
+  // Помечаем уже избранные
+  document.querySelectorAll('.product').forEach(card => {
+    const id = card.dataset.id;
+    if (favoriteIds.includes(id)) {
+      const icon = card.querySelector('.heart-icon');
+      icon && icon.classList.add('active');
+    }
+  });
+
+  // Делегируем клик по сердечку
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.product__favorite');
+    if (!btn) return;
+    const card = btn.closest('.product');
+    const id = card.dataset.id;
+    const icon = btn.querySelector('.heart-icon');
+    if (!id || !icon) return;
+
+    const idx = favoriteIds.indexOf(id);
+    if (idx > -1) {
+      // убрать
+      favoriteIds.splice(idx, 1);
+      favoriteItems = favoriteItems.filter(x => x.id !== id);
+      icon.classList.remove('active');
+    } else {
+      // добавить
+      favoriteIds.push(id);
+      favoriteItems.push({
+        id,
+        img:   card.querySelector('.image-switch__img img')?.src || '',
+        title: card.querySelector('.product__title a')?.innerText.trim() || '',
+        price: card.querySelector('.product-price__current')?.innerText.trim() || ''
+      });
+      icon.classList.add('active');
+    }
+
+    // сохранить
+    localStorage.setItem(IDS_KEY, JSON.stringify(favoriteIds));
+    localStorage.setItem(ITEMS_KEY, JSON.stringify(favoriteItems));
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const IDS_KEY   = 'favorites';
+  const ITEMS_KEY = 'favoriteItems';
+
+  let favIds   = JSON.parse(localStorage.getItem(IDS_KEY)   || '[]');
+  let favItems = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+
+  // помечаем иконки
+  document.querySelectorAll('.product').forEach(card => {
+    const id = card.dataset.id;
+    if (favIds.includes(id)) {
+      card.querySelector('.heart-icon')?.classList.add('active');
+    }
+  });
+
+  document.addEventListener('click', e => {
+    const btn  = e.target.closest('.product__favorite');
+    if (!btn) return;
+    const card = btn.closest('.product');
+    const id   = card.dataset.id;
+    if (!id) return;
+
+    const idx = favIds.indexOf(id);
+    if (idx > -1) {
+      // удалить
+      favIds.splice(idx, 1);
+      favItems = favItems.filter(x => x.id !== id);
+      btn.querySelector('.heart-icon').classList.remove('active');
+    } else {
+      // добавить
+      favIds.push(id);
+      favItems.push({
+        id,
+        html: card.outerHTML   // <-- сохраняем весь HTML карточки
+      });
+      btn.querySelector('.heart-icon').classList.add('active');
+    }
+
+    localStorage.setItem(IDS_KEY,   JSON.stringify(favIds));
+    localStorage.setItem(ITEMS_KEY, JSON.stringify(favItems));
+  });
+});
+</script>
+    </body>
+</html>

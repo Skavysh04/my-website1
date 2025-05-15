@@ -1,0 +1,127 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  body{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: url(img/33.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+  }
+  section{
+      position: relative;
+      max-width: 400px;
+      background-color: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 20px;
+      backdrop-filter: blur(55px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 3rem;
+  }
+  h1{
+      font-size: 2rem;
+      color: #fff;
+      text-align: center;
+  }
+  .inputbox {
+      position: relative;
+      margin: 30px 0;
+      max-width: 310px;
+      border-bottom: 2px solid #fff;
+  }
+  .inputbox label {
+      position: absolute;
+      top: 15px;
+      left: 5px;
+      color: #fff;
+      font-size: 1rem;
+      pointer-events: none;
+      transition: 0.3s ease-in-out;
+  }
+  .inputbox input {
+      width: 100%;
+      height: 60px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      padding: 20px 35px 5px 5px;
+      color: #fff;
+  }
+  .inputbox ion-icon {
+      position: absolute;
+      right: 8px;
+      color: #fff;
+      font-size: 1.2rem;
+      top: 20px;
+  }
+  /* При фокусе или при наличии текста в поле лейбл сдвигается */
+  .inputbox input:focus ~ label,
+  .inputbox input:not(:placeholder-shown) ~ label {
+      top: -10px;
+      font-size: 0.85rem;
+      color: #ddd;
+  }
+  .forget{
+      margin: 35px 0;
+      font-size: 0.85rem;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+  }
+  .forget label{
+      display: flex;
+      align-items: center;
+  }
+  .forget label input{
+      margin-right: 3px;
+  }
+  .forget a{
+      text-decoration: none;
+      font-weight: 600;
+      color: #fff;
+  }
+  .forget a:hover{
+      text-decoration: underline;
+  }
+  /* Красивый стиль кнопки */
+  .button {
+      display: inline-block;
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-radius: 40px;
+      background: linear-gradient(65deg, white);
+      color: black;
+      font-size: 1.1rem;
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+  }
+  .button:hover {
+      background: linear-gradient(45deg, black, white);
+      color: white;
+  }
+  .change-color-link{
+      font-size: 15px;
+      line-height: 1;
+      color: black;
+      font-family: 'Times New Roman', Times, serif;
+      text-decoration: none;
+  }
+  .change-color-link:hover{
+      color: white; 
+  }
+  #pass{
+      font-size: 15px;
+      padding-top: 20px;
+  }
